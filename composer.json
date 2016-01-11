@@ -1,0 +1,17 @@
+{
+    "name": "sleepwalker/udumpparser",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "SleepWalker",
+            "email": "dev@udf.su"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"udumpparser\\": "src/"}
+    },
+    "require": {
+        "php": "^5.0",
+        "ko-ko-ko/assert": "^1.0.0"
+    }
+}

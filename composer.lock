@@ -1,0 +1,56 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "8c596975f8b40fd97c61d0ebbfd29281",
+    "content-hash": "dc3f967cc35735c4cf34f7d3fa1167e4",
+    "packages": [
+        {
+            "name": "ko-ko-ko/assert",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ko-ko-ko/php-assert.git",
+                "reference": "a5b91c2c1f8651cd0a00f8a9b740708a4ddac891"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ko-ko-ko/php-assert/zipball/a5b91c2c1f8651cd0a00f8a9b740708a4ddac891",
+                "reference": "a5b91c2c1f8651cd0a00f8a9b740708a4ddac891",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8.21"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "KoKoKo\\assert\\": "src",
+                    "KoKoKo\\assert\\tests\\": "tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Levishchenko",
+                    "email": "index.0h@gmail.com"
+                }
+            ],
+            "description": "Fast flexible php assert",
+            "time": "2016-01-09 05:11:50"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
