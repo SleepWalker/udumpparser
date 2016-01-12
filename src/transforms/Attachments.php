@@ -19,7 +19,9 @@ class Attachments extends Transform
     {
         $images = explode('\\|', $fields[$field]);
 
-        $fields[$field] = array_map(function ($image) use ($scheme) {
+        $fields[$field] = &$images;
+
+        foreach ($images as &$image) {
             $image = explode('`', $image);
             if (count($image) == 6) {
                 $keys = array_merge([
@@ -34,8 +36,6 @@ class Attachments extends Transform
                 $image['filename'] = $image['name'] . '.' . $image['extension'];
                 $image['filepath'] = $scheme->getUploadsPath() . '/' . $image['filename'];
             }
-
-            return $image;
-        }, $images);
+        }
     }
 }

@@ -40,6 +40,7 @@ abstract class ModuleScheme implements ModuleSchemeFields
     public function convert()
     {
         $dumpPath = $this->getDumpPath();
+        $map = $this->getFieldsMap();
 
         if (!is_file($dumpPath)) {
             throw new \DomainException("Can not open file $dumpPath");
@@ -54,32 +55,32 @@ abstract class ModuleScheme implements ModuleSchemeFields
 
         // (?<!\\\\) - ignore escaped entities (e.g. \|)
         $data = preg_split('/(?<!\\\\)\n/', $data);
-        $data = array_map(function ($item) {
-            return preg_split(
+        foreach ($data as &$row) {
+            $row = preg_split(
                 '/(?<!\\\\)\|/',
-                preg_replace('/\\\\\n/', "\n", $item)
+                preg_replace('/\\\\\n/', "\n", $row)
             );
-        }, $data);
 
-        $map = $this->getFieldsMap();
+            $row = $this->mapRow($map, $row);
+        }
 
-        return array_map(function ($entry) use ($map) {
-            return $this->mapEntry($map, $entry);
-        }, $data);
+        return $data;
     }
 
-    private function mapEntry($map, $entry)
+    /**
+     * @param  array $map
+     * @param  array $row
+     * @return array
+     */
+    private function mapRow($map, $row)
     {
-        Assert::assert($map, 'map')->isArray();
-        Assert::assert($entry, 'entry')->isArray();
-
-        $newEntry = [];
-        foreach ($entry as $key => $value) {
+        $newRow = [];
+        foreach ($row as $key => $value) {
             if (isset($map[$key])) {
                 $key = $map[$key];
             }
 
-            $newEntry[$key] = $value;
+            $newRow[$key] = $value;
         }
 
         // invoke transforms
@@ -88,15 +89,15 @@ abstract class ModuleScheme implements ModuleSchemeFields
             new \udumpparser\transforms\MysqlDate(),
             new \udumpparser\transforms\Attachments(),
         ];
-        foreach ($newEntry as $field => $value) {
+        foreach ($newRow as $field => $value) {
             foreach ($transforms as $transform) {
                 if ($transform->canAccept($field)) {
-                    $transform->visit($field, $newEntry, $this);
+                    $transform->visit($field, $newRow, $this);
                 }
             }
         }
 
-        return $newEntry;
+        return $newRow;
     }
 
     public function getDumpPath()
